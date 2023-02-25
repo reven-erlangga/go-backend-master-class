@@ -22,6 +22,7 @@ This project part of class in udemy "Backend Master Class [Golang + Postgres + K
 - ### Library / Package
 
   - [Golang Migrate](https://github.com/golang-migrate/migrate)
+  - [SQLC](https://github.com/kyleconroy/sqlc)
 
 - ### Tools
 
