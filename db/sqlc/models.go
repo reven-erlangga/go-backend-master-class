@@ -9,12 +9,12 @@ import (
 )
 
 type Account struct {
-	ID        int64          `json:"id"`
-	Owner     sql.NullString `json:"owner"`
-	Balance   sql.NullInt64  `json:"balance"`
-	Currency  string         `json:"currency"`
-	CreatedAt sql.NullTime   `json:"created_at"`
-	UpdatedAt sql.NullTime   `json:"updated_at"`
+	ID        int64        `json:"id"`
+	Owner     string       `json:"owner"`
+	Balance   int64        `json:"balance"`
+	Currency  string       `json:"currency"`
+	CreatedAt sql.NullTime `json:"created_at"`
+	UpdatedAt sql.NullTime `json:"updated_at"`
 }
 
 type Entry struct {
