@@ -16,4 +16,13 @@ migratedown:
 sqlc:
 	docker run --rm -v "${CURDIR}:/src" -w /src kjconroy/sqlc generate
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc
+test:
+	go test -v -cover -coverprofile coverage.out ./...
+
+previewtest:
+	go tool cover -html=coverage.out
+
+bench:
+	go test -v -cover -coverprofile coverage.out ./... -bench=.
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test previewtest bench

@@ -7,8 +7,37 @@ package db
 
 import (
 	"context"
-	"database/sql"
 )
+
+const createAccount = `-- name: CreateAccount :one
+INSERT INTO accounts (
+    owner,
+    balance,
+    currency
+) VALUES (
+    $1, $2, $3
+) RETURNING id, owner, balance, currency, created_at, updated_at
+`
+
+type CreateAccountParams struct {
+	Owner    string `json:"owner"`
+	Balance  int64  `json:"balance"`
+	Currency string `json:"currency"`
+}
+
+func (q *Queries) CreateAccount(ctx context.Context, arg CreateAccountParams) (Account, error) {
+	row := q.db.QueryRowContext(ctx, createAccount, arg.Owner, arg.Balance, arg.Currency)
+	var i Account
+	err := row.Scan(
+		&i.ID,
+		&i.Owner,
+		&i.Balance,
+		&i.Currency,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
 
 const deleteAccount = `-- name: DeleteAccount :exec
 DELETE FROM accounts 
@@ -89,8 +118,8 @@ RETURNING id, owner, balance, currency, created_at, updated_at
 `
 
 type UpdateAccountParams struct {
-	ID      int64         `json:"id"`
-	Balance sql.NullInt64 `json:"balance"`
+	ID      int64 `json:"id"`
+	Balance int64 `json:"balance"`
 }
 
 func (q *Queries) UpdateAccount(ctx context.Context, arg UpdateAccountParams) (Account, error) {
