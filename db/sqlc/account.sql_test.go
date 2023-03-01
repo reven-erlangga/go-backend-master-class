@@ -159,6 +159,7 @@ func TestQueries_ListAccounts(t *testing.T) {
 					Offset: 5,
 				},
 			},
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
